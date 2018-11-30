@@ -211,8 +211,7 @@ class LogManager(object):
                 text_position.centery = state.screen.printer_surface.get_rect().centery + i * 20
                 state.screen.printer_surface.blit(text, text_position)
 
-            # render the surface game and printer surface to the main display
-            state.screen.blit_surface_game()
+            # render printer surface to the main display
             state.screen.blit_printer_surface()
         elif type(state) == WinScreenState or type(state) == LoseScreenState:
             # put black background to the screen
