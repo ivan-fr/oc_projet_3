@@ -221,7 +221,6 @@ class LogManager(object):
             label = None
             if type(state) == WinScreenState:
                 label = font.render("YOU WIN ! You asleep the guard.", True, pg_var.color.THECOLORS['white'])
-                # activate the show of the ranki@ng.
             elif type(state) == LoseScreenState:
                 label = font.render("YOU LOSE ! You were missing : " +
                                     str(", ".join(state.missing_object)) + '.',
