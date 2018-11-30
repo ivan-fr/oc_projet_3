@@ -3,7 +3,7 @@ from pygame import locals as pg_var
 
 from constants import *
 
-from states import LevelState, LoseScreenState, WinScreenState
+from states import LevelState, WinScreenState
 
 
 class Store(object):
@@ -52,11 +52,8 @@ class Store(object):
     def set_next_state(self):
         if self.selected_state.next_state:
             if type(self.selected_state) == LevelState:
-                if self.selected_state.maze.character.status == "win":
-                    self.selected_state = WinScreenState(**self.selected_state.data_for_next_state)
-                elif self.selected_state.maze.character.status == "lose":
-                    self.selected_state = LoseScreenState(**self.selected_state.data_for_next_state)
-            elif type(self.selected_state) == WinScreenState or type(self.selected_state) == LoseScreenState:
+                self.selected_state = WinScreenState()
+            elif type(self.selected_state) == WinScreenState:
                 self.selected_state = LevelState()
 
     def quit_state(self):
@@ -130,17 +127,7 @@ class GameManager(object):
 
     @staticmethod
     def face_guardian():
-        store = Store.get_instance()
-        state = store.get_state()
-
         GameManager.update_graphic_callback()
-
-        # if the player have got all objects in the maze, he win else he lose.
-        if len(state.maze.character.name_of_picked_objects) == len(state.maze.objects_name):
-            state.maze.character.status = "win"
-        else:
-            state.maze.character.status = "lose"
-
         GameManager.next_state_callback()
 
 
@@ -168,6 +155,8 @@ class InputManager(object):
 
                                 elif _key == 'K_RETURN':
                                     InputManager.next_state_callback()
+                                break
+                    break
 
 
 class LogManager(object):
@@ -214,18 +203,10 @@ class LogManager(object):
             # render the surface game and printer surface to the main display
             state.screen.blit_surface_game()
             state.screen.blit_printer_surface()
-        elif type(state) == WinScreenState or type(state) == LoseScreenState:
+        elif type(state) == WinScreenState:
             # put black background to the screen
             state.screen.display.fill(pg_var.color.THECOLORS['black'])
-
-            label = None
-            if type(state) == WinScreenState:
-                label = font.render("YOU WIN ! You asleep the guard.", True, pg_var.color.THECOLORS['white'])
-                # activate the show of the ranki@ng.
-            elif type(state) == LoseScreenState:
-                label = font.render("YOU LOSE ! You were missing : " +
-                                    str(", ".join(state.missing_object)) + '.',
-                                    True, pg_var.color.THECOLORS['white'])
+            label = font.render("YOU WIN ! You asleep the guard.", True, pg_var.color.THECOLORS['white'])
             if label:
                 text_position = label.get_rect()
                 text_position.centerx = state.screen.display.get_rect().centerx

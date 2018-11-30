@@ -37,31 +37,13 @@ class LevelState(State):
             self.next_state = True
             self.data_for_next_state = {'status': self.maze.character.status}
         else:
-            if self.maze.character.status == "lose_time" or self.maze.character.status == "lose":
-                self.next_state = True
-                self.data_for_next_state = {'status': self.maze.character.status}
-            else:
-                self.title = LEVELS[self.level_cursor]
-
-        if self.next_state and self.maze.character.status == 'lose':
-            self.data_for_next_state['missing_object'] = self.maze.objects_name - \
-                                                         self.maze.character.name_of_picked_objects
-
-
-class LoseScreenState(State):
-    """this class requires the display of the lose situation"""
-
-    def __init__(self, **kwargs):
-        super(LoseScreenState, self).__init__()
-        # listen return key
-        self.listen['key'] += ('K_RETURN',)
-        self.missing_object = kwargs.get('missing_object')
+            self.title = LEVELS[self.level_cursor]
 
 
 class WinScreenState(State):
     """this class requires the display of the win situation"""
 
-    def __init__(self, **kwargs):
+    def __init__(self):
         super(WinScreenState, self).__init__()
         # listen return key
         self.listen['key'] += ('K_RETURN',)
