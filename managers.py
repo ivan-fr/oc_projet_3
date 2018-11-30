@@ -168,7 +168,8 @@ class InputManager(object):
 
                                 elif _key == 'K_RETURN':
                                     InputManager.next_state_callback()
-
+                                break
+                    break
 
 class LogManager(object):
     """this class can display all the messages on the screen"""
