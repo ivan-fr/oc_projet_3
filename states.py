@@ -36,7 +36,7 @@ class LevelState(State):
         except IndexError:
             self.next_state = True
         else:
-            if self.maze.character.status == "lose_time" or self.maze.character.status == "lose":
+            if self.maze.character.status == "lose":
                 self.next_state = True
             else:
                 self.title = LEVELS[self.level_cursor]
