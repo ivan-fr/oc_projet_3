@@ -46,6 +46,9 @@ class Store(object):
             else:
                 self.selected_state.next_state = True
 
+    def quit_state(self):
+        self.selected_state.quit = True
+
     def set_initial(self):
         self.selected_state = LevelState()
 
@@ -55,9 +58,6 @@ class Store(object):
                 self.selected_state = WinScreenState()
             elif type(self.selected_state) == WinScreenState:
                 self.selected_state = LevelState()
-
-    def quit_state(self):
-        self.selected_state.quit = True
 
 
 class GameManager(object):
@@ -110,20 +110,6 @@ class GameManager(object):
     def quit():
         store = Store.get_instance()
         store.quit_state()
-
-    @staticmethod
-    def collect_item(object_name):
-        store = Store.get_instance()
-        state = store.get_state()
-
-        assert len(state.maze.character.name_of_picked_objects) < len(state.maze.objects_name)
-        state.maze.character.character_message = "You pick \"" + object_name + "\"."
-
-        # add object name to picked objects set list
-        state.maze.character.name_of_picked_objects.add(object_name)
-
-        if len(state.maze.character.name_of_picked_objects) == len(state.maze.objects_name):
-            state.maze.character.character_message += "\n You made a syringe with ether."
 
     @staticmethod
     def face_guardian():
@@ -186,22 +172,7 @@ class LogManager(object):
             # text_position.centery = 0
             state.screen.printer_surface.blit(text, text_position)
 
-            # insert text of the number object get by the player in the printer surface
-            text = font.render("items " + str(len(state.maze.character.name_of_picked_objects)) + "/"
-                               + str(len(state.maze.objects_name)), True, pg_var.color.THECOLORS['green'])
-            text_position = text.get_rect(topright=(SIDE_WINDOW, 0))
-            state.screen.printer_surface.blit(text, text_position)
-
-            # insert message in the printer surface
-            for i, line in enumerate(state.maze.character.character_message.splitlines()):
-                text = font.render(line, True, pg_var.color.THECOLORS['white'])
-                text_position = text.get_rect()
-                text_position.centerx = state.screen.printer_surface.get_rect().centerx
-                text_position.centery = state.screen.printer_surface.get_rect().centery + i * 20
-                state.screen.printer_surface.blit(text, text_position)
-
-            # render the surface game and printer surface to the main display
-            state.screen.blit_surface_game()
+            # render printer surface to the main display
             state.screen.blit_printer_surface()
         elif type(state) == WinScreenState:
             # put black background to the screen
@@ -217,7 +188,6 @@ class LogManager(object):
 class MotionManager(object):
     """ A game manager that handles entities movements """
     face_guardian_callback = lambda: GameManager.face_guardian()
-    collect_item_callback = lambda object_name: GameManager.collect_item(object_name)
 
     direction_dict = {'K_LEFT': lambda x, y: (x - 1, y),
                       'K_RIGHT': lambda x, y: (x + 1, y),
@@ -259,15 +229,6 @@ class MotionManager(object):
 
                 MotionManager.face_guardian_callback()
 
-            # else if the current_tile have an object image, the player get the object
-            elif target_tile.object_image:
-                # clean the tile
-                target_tile.object_image = None
-
-                MotionManager.collect_item_callback(target_tile.object_name)
-
-                target_tile.object_name = None
-
 
 class GraphicManager(object):
     """ A game manager that handles graphics rendering """
@@ -290,8 +251,6 @@ class GraphicManager(object):
 
                     if tile.exit_image:
                         state.screen.surface_game.blit(tile.exit_image, (x, y))
-                    elif tile.object_image:
-                        state.screen.surface_game.blit(tile.object_image, (x, y))
 
                     if tile.player_image:
                         state.screen.surface_game.blit(tile.player_image, (x, y))

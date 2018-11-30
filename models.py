@@ -1,8 +1,6 @@
 import pygame
 from constants import *
 
-from random import randint
-
 
 class ModelTile(object):
     """This class represents all the information on each of the tiles of the labyrinth"""
@@ -22,9 +20,6 @@ class ModelTile(object):
         self.tile_image = None
         self.exit_image = None
         self.player_image = None
-        self.object_image = None
-
-        self.object_name = None
 
 
 class ModelScreen(object):
@@ -84,9 +79,6 @@ class ModelMaze(object):
         # character in the maze
         self.character = None
 
-        # set the objects_name
-        self.objects_name = {'needle', 'tube', 'ether'}
-
         self.geometry = {'number_of_rectangle_on_horizontal_axis': 0,
                          'number_of_rectangle_on_vertical_axis': 0,
                          'length_side_rectangle_on_horizontal_axis': 0,
@@ -135,7 +127,7 @@ class ModelMaze(object):
         images = {}
 
         # Set images variables
-        for name in ('WALL', 'START', 'FLOOR', 'GUARDIAN', 'PLAYER') + tuple(self.objects_name):
+        for name in ('WALL', 'START', 'FLOOR', 'GUARDIAN', 'PLAYER'):
             # load image from pygame
             image = pygame.image.load(globals()['IMAGE_' + name.upper()]).convert_alpha()
             images['image_' + name.lower()] = \
@@ -170,20 +162,6 @@ class ModelMaze(object):
 
                         # add available position for the objects in the maze
                         positions_available.append((i, j))
-
-        # generate objects in the maze
-        for object_name in self.objects_name:
-            # generate random integer from 0 to length of positions available
-            random_pos = randint(0, len(positions_available) - 1)
-            # choose a random position available
-            position_object = positions_available[random_pos]
-            # delete the actual selected position available from positions available list
-            del positions_available[random_pos]
-
-            # put images in the random selected tile
-            self.tiles[position_object].object_image = images['image_' + object_name]
-            # write object name in the tile to remember
-            self.tiles[position_object].object_name = object_name
         # END OF GENERATE TILE #
 
     def get_tile(self, x, y):
@@ -207,9 +185,3 @@ class ModelCharacter(object):
 
     def __init__(self, tile_player: ModelTile):
         self.player_tile = tile_player
-
-        # The status is used to determine which player has lost or won since the game_loop
-        self.status = "process"
-        self.character_message = "..."
-
-        self.name_of_picked_objects = set()
