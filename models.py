@@ -153,7 +153,6 @@ class ModelMaze(object):
                     if structure[i][j] == 'j':
                         self.tiles[(i, j)].tile_image = images['image_start']
                         self.tiles[(i, j)].player_image = images['image_player']
-                        self.character = ModelCharacter(self.tiles[(i, j)])
                     elif structure[i][j] == 'a':
                         self.tiles[(i, j)].tile_image = images['image_floor']
                         self.tiles[(i, j)].exit_image = images['image_guardian']
@@ -182,6 +181,4 @@ class ModelMaze(object):
 
 class ModelCharacter(object):
     """This class represents all the informations about the character"""
-
-    def __init__(self, tile_player: ModelTile):
-        self.player_tile = tile_player
+    pass
