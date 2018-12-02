@@ -54,7 +54,7 @@ class Store(object):
         if self.selected_state.next_state:
             if type(self.selected_state) == LevelState:
                 if self.selected_state.maze.character.status == Status.win:
-                    self.selected_state = WinScreenState(**self.selected_state.data_for_next_state)
+                    self.selected_state = WinScreenState()
                 elif self.selected_state.maze.character.status == Status.lose:
                     self.selected_state = LoseScreenState(**self.selected_state.data_for_next_state)
             elif type(self.selected_state) == WinScreenState or type(self.selected_state) == LoseScreenState:
