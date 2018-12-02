@@ -59,7 +59,7 @@ class LoseScreenState(State):
 class WinScreenState(State):
     """this class requires the display of the win situation"""
 
-    def __init__(self, **kwargs):
+    def __init__(self):
         super(WinScreenState, self).__init__()
         # listen return key
         self.listen['key'] += ('K_RETURN',)
