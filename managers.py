@@ -90,9 +90,9 @@ class GameManager(object):
             elif state.quit:
                 game_loop = False
             else:
+                GameManager.listen_event_callback(state.listen)
                 GameManager.update_graphic_callback()
                 GameManager.update_log_callback()
-                GameManager.listen_event_callback(state.listen)
 
                 # refresh the screen
                 pygame.display.flip()
