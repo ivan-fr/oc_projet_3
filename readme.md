@@ -12,7 +12,7 @@
 
 ## 2 - Lancer le programme 
 * Exécuter : `python starter.py`  depuis la console
-
+[]()
 --------
 
 # Projet MacGyver
