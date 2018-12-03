@@ -7,7 +7,7 @@ folder = os.path.basename(os.getcwd())
 TITLE_WINDOW = "MacGyver Maze"
 
 SIDE_WINDOW = 750
-PRINTER_SURFACE_HEIGHT = 80
+PRINTER_SURFACE_HEIGHT = 100
 
 LEVEL_FILE = os.path.join(BASE_DIR, folder + "/file/levels.txt")
 LEVELS = ('level1',)
