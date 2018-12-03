@@ -66,10 +66,18 @@ class Store(object):
 
 class GameManager(object):
     """this class have the dispatcher method for send a action to all managers"""
-    update_graphic_callback = lambda: GraphicManager.update_graphic()
-    update_log_callback = lambda: LogManager.update_log()
-    listen_event_callback = lambda listen: InputManager.listen_event(listen)
-    next_state_callback = lambda: GameManager.next_state()
+
+    @staticmethod
+    def update_graphic_callback():
+        return GraphicManager.update_graphic()
+
+    @staticmethod
+    def update_log_callback():
+        return LogManager.update_log()
+
+    @staticmethod
+    def listen_event_callback(listen):
+        return InputManager.listen_event(listen)
 
     @staticmethod
     def start():
@@ -142,15 +150,27 @@ class GameManager(object):
         else:
             state.maze.character.status = Status.lose
 
-        GameManager.next_state_callback()
+        GameManager.next_state()
 
 
 class InputManager(object):
     """this class allows you to listen to the keys on the keyboard"""
-    reboot_state_callback = lambda: GameManager.reboot_state()
-    move_callback = lambda direction: MotionManager.move(direction)
-    next_state_callback = lambda: GameManager.next_state()
-    quit_state_callback = lambda: GameManager.quit()
+
+    @staticmethod
+    def reboot_state_callback():
+        return GameManager.reboot_state()
+
+    @staticmethod
+    def move_callback(direction):
+        return MotionManager.move(direction)
+
+    @staticmethod
+    def next_state_callback():
+        return GameManager.next_state()
+
+    @staticmethod
+    def quit_state_callback():
+        return GameManager.quit()
 
     @staticmethod
     def listen_event(listen):
@@ -236,8 +256,14 @@ class LogManager(object):
 
 class MotionManager(object):
     """ A game manager that handles entities movements """
-    face_guardian_callback = lambda: GameManager.face_guardian()
-    collect_item_callback = lambda object_name: GameManager.collect_item(object_name)
+
+    @staticmethod
+    def face_guardian_callback():
+        return GameManager.face_guardian()
+
+    @staticmethod
+    def collect_item_callback(object_name):
+        return GameManager.collect_item(object_name)
 
     direction_dict = {'K_LEFT': lambda x, y: (x - 1, y),
                       'K_RIGHT': lambda x, y: (x + 1, y),
