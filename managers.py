@@ -4,6 +4,7 @@ from pygame import locals as pg_var
 from constants import *
 
 from states import LevelState, LoseScreenState, WinScreenState
+from models import Status
 
 
 class Store(object):
@@ -52,9 +53,9 @@ class Store(object):
     def set_next_state(self):
         if self.selected_state.next_state:
             if type(self.selected_state) == LevelState:
-                if self.selected_state.maze.character.status == "win":
-                    self.selected_state = WinScreenState(**self.selected_state.data_for_next_state)
-                elif self.selected_state.maze.character.status == "lose":
+                if self.selected_state.maze.character.status == Status.win:
+                    self.selected_state = WinScreenState()
+                elif self.selected_state.maze.character.status == Status.lose:
                     self.selected_state = LoseScreenState(**self.selected_state.data_for_next_state)
             elif type(self.selected_state) == WinScreenState or type(self.selected_state) == LoseScreenState:
                 self.selected_state = LevelState()
@@ -65,10 +66,18 @@ class Store(object):
 
 class GameManager(object):
     """this class have the dispatcher method for send a action to all managers"""
-    update_graphic_callback = lambda: GraphicManager.update_graphic()
-    update_log_callback = lambda: LogManager.update_log()
-    listen_event_callback = lambda listen: InputManager.listen_event(listen)
-    next_state_callback = lambda: GameManager.next_state()
+
+    @staticmethod
+    def update_graphic_callback():
+        return GraphicManager.update_graphic()
+
+    @staticmethod
+    def update_log_callback():
+        return LogManager.update_log()
+
+    @staticmethod
+    def listen_event_callback(listen):
+        return InputManager.listen_event(listen)
 
     @staticmethod
     def start():
@@ -89,9 +98,9 @@ class GameManager(object):
             elif state.quit:
                 game_loop = False
             else:
+                GameManager.listen_event_callback(state.listen)
                 GameManager.update_graphic_callback()
                 GameManager.update_log_callback()
-                GameManager.listen_event_callback(state.listen)
 
                 # refresh the screen
                 pygame.display.flip()
@@ -137,19 +146,31 @@ class GameManager(object):
 
         # if the player have got all objects in the maze, he win else he lose.
         if len(state.maze.character.name_of_picked_objects) == len(state.maze.objects_name):
-            state.maze.character.status = "win"
+            state.maze.character.status = Status.win
         else:
-            state.maze.character.status = "lose"
+            state.maze.character.status = Status.lose
 
-        GameManager.next_state_callback()
+        GameManager.next_state()
 
 
 class InputManager(object):
     """this class allows you to listen to the keys on the keyboard"""
-    reboot_state_callback = lambda: GameManager.reboot_state()
-    move_callback = lambda direction: MotionManager.move(direction)
-    next_state_callback = lambda: GameManager.next_state()
-    quit_state_callback = lambda: GameManager.quit()
+
+    @staticmethod
+    def reboot_state_callback():
+        return GameManager.reboot_state()
+
+    @staticmethod
+    def move_callback(direction):
+        return MotionManager.move(direction)
+
+    @staticmethod
+    def next_state_callback():
+        return GameManager.next_state()
+
+    @staticmethod
+    def quit_state_callback():
+        return GameManager.quit()
 
     @staticmethod
     def listen_event(listen):
@@ -170,6 +191,7 @@ class InputManager(object):
                                     InputManager.next_state_callback()
                                 break
                     break
+
 
 class LogManager(object):
     """this class can display all the messages on the screen"""
@@ -221,7 +243,6 @@ class LogManager(object):
             label = None
             if type(state) == WinScreenState:
                 label = font.render("YOU WIN ! You asleep the guard.", True, pg_var.color.THECOLORS['white'])
-                # activate the show of the ranki@ng.
             elif type(state) == LoseScreenState:
                 label = font.render("YOU LOSE ! You were missing : " +
                                     str(", ".join(state.missing_object)) + '.',
@@ -235,8 +256,14 @@ class LogManager(object):
 
 class MotionManager(object):
     """ A game manager that handles entities movements """
-    face_guardian_callback = lambda: GameManager.face_guardian()
-    collect_item_callback = lambda object_name: GameManager.collect_item(object_name)
+
+    @staticmethod
+    def face_guardian_callback():
+        return GameManager.face_guardian()
+
+    @staticmethod
+    def collect_item_callback(object_name):
+        return GameManager.collect_item(object_name)
 
     direction_dict = {'K_LEFT': lambda x, y: (x - 1, y),
                       'K_RIGHT': lambda x, y: (x + 1, y),
@@ -250,42 +277,43 @@ class MotionManager(object):
         store = Store.get_instance()
         state = store.get_state()
 
-        # initialization of the status and the character's message
-        state.maze.character.character_message = "..."
-        source_tile = state.maze.character.player_tile
+        if type(state) == LevelState:
+            # initialization of the status and the character's message
+            state.maze.character.character_message = "..."
+            source_tile = state.maze.character.player_tile
 
-        if not source_tile:
-            return
+            if not source_tile:
+                return
 
-        target_tile = state.maze.get_tile(*cls.direction_dict[direction](source_tile.i, source_tile.j))
+            target_tile = state.maze.get_tile(*cls.direction_dict[direction](source_tile.i, source_tile.j))
 
-        if not target_tile:
-            return
+            if not target_tile:
+                return
 
-        # if the target tile is not a wall
-        if target_tile.reachable:
-            # exchange image between target_tile and current_tile
-            target_tile.player_image = source_tile.player_image
-            source_tile.player_image = None
+            # if the target tile is not a wall
+            if target_tile.reachable:
+                # exchange image between target_tile and current_tile
+                target_tile.player_image = source_tile.player_image
+                source_tile.player_image = None
 
-            # save the new positions
-            state.maze.character.player_tile = target_tile
+                # save the new positions
+                state.maze.character.player_tile = target_tile
 
-            # if the current tile have an exit image, the player is on the guardian tile
-            if target_tile.exit_image:
-                # remove the exit_image
-                target_tile.exit_image = None
+                # if the current tile have an exit image, the player is on the guardian tile
+                if target_tile.exit_image:
+                    # remove the exit_image
+                    target_tile.exit_image = None
 
-                MotionManager.face_guardian_callback()
+                    MotionManager.face_guardian_callback()
 
-            # else if the current_tile have an object image, the player get the object
-            elif target_tile.object_image:
-                # clean the tile
-                target_tile.object_image = None
+                # else if the current_tile have an object image, the player get the object
+                elif target_tile.object_image:
+                    # clean the tile
+                    target_tile.object_image = None
 
-                MotionManager.collect_item_callback(target_tile.object_name)
+                    MotionManager.collect_item_callback(target_tile.object_name)
 
-                target_tile.object_name = None
+                    target_tile.object_name = None
 
 
 class GraphicManager(object):
@@ -304,7 +332,7 @@ class GraphicManager(object):
                 x = tile.i * state.maze.geometry['length_side_rectangle_on_horizontal_axis']
                 y = tile.j * state.maze.geometry['length_side_rectangle_on_vertical_axis']
 
-                if tile.tile_image is not None:
+                if tile.tile_image:
                     state.screen.surface_game.blit(tile.tile_image, (x, y))
 
                     if tile.exit_image:
