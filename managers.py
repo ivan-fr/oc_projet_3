@@ -231,7 +231,7 @@ class LogManager(object):
                 text = font.render(line, True, pg_var.color.THECOLORS['white'])
                 text_position = text.get_rect()
                 text_position.centerx = state.screen.printer_surface.get_rect().centerx
-                text_position.centery = state.screen.printer_surface.get_rect().centery + i * 20
+                text_position.centery = state.screen.printer_surface.get_rect().centery + 10 + i * 20
                 state.screen.printer_surface.blit(text, text_position)
 
             # render printer surface to the main display
