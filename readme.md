@@ -1,18 +1,18 @@
-## 1 - Exigences
+## 1 - Pré-requis
 *  **Python 3.6.x**.
 * pygame
 
 ### Installation 
 * Télécharger le repository.
 * Utiliser un **environnement virtuel** est recommandé.
-    * Exécuter la ligne de commande : `python3 -m venv <path/to/new/virtual/environment>  
+    * Exécuter la ligne de commande : `python3 -m venv <path/to/new/virtual/environment>`  
     puis `source <path/to/venv>/bin/activate` depuis MacOS  
     ou `<path/to/venv>\Scripts\activate.bat`depuis Windows
 * Installer les dépendances : `pip install -r requirements.txt`
 
 ## 2 - Lancer le programme 
 * Exécuter : `python starter.py`  depuis la console
-[]()
+
 --------
 
 # Projet MacGyver
@@ -26,18 +26,18 @@ J'ai rencontré des difficultés avec la gestion de l'affichage de la fenêtre a
 
 ## Fonctionnalités
 
-- [x] Il n'y a qu'un seul niveau. La structure (départ, emplacement des murs, arrivée), est enregistrée dans un 
+- Il n'y a qu'un seul niveau. La structure (départ, emplacement des murs, arrivée), est enregistrée dans un 
 fichier pour la modifier facilement au besoin.
 
-- [x] MacGyver est contrôlé par les touches directionnelles du clavier.
-- [x] Les objets sont répartis aléatoirement dans le labyrinthe et change d’emplacement si l'utilisateur ferme le jeu et le relance.
-- [x] La fenêtre du jeu sera un carré pouvant afficher 15 sprites sur la longueur.
-- [x] MacGyver peut se déplacer de case en case.
-- [x] Il récupère un objet simplement en se déplaçant dessus.
-- [x] Le programme s'arrête uniquement si MacGyver a bien récupéré tous les objets et trouvé la sortie du labyrinthe. S'il n'a pas tous les objets et qu'il se présente devant le garde, il meurt.
-- [x] Le programme est standalone, c'est-à-dire qu'il pourra être exécuté sur n'importe quel ordinateur.
-- [x] Respecter les bonnes pratiques de la PEP 8 
-- [x] Code écrit en anglais : nom des variables, commentaires, fonctions...
+- MacGyver est contrôlé par les touches directionnelles du clavier.
+- Les objets sont répartis aléatoirement dans le labyrinthe et change d’emplacement si l'utilisateur ferme le jeu et le relance.
+- La fenêtre du jeu sera un carré pouvant afficher 15 sprites sur la longueur.
+- MacGyver peut se déplacer de case en case.
+- Il récupère un objet simplement en se déplaçant dessus.
+- Le programme s'arrête uniquement si MacGyver a bien récupéré tous les objets et trouvé la sortie du labyrinthe. S'il n'a pas tous les objets et qu'il se présente devant le garde, il meurt.
+- Le programme est standalone, c'est-à-dire qu'il pourra être exécuté sur n'importe quel ordinateur.
+- Respecter les bonnes pratiques de la PEP 8 
+- Code écrit en anglais : nom des variables, commentaires, fonctions...
 
 --------
 

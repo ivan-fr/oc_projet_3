@@ -1,2 +1,5 @@
 .idea/
 __pycache__/
+venv/
+.DS_Store
+oc_projet_3-master.zip
