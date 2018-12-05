@@ -64,7 +64,7 @@ Chaque manager s'occupe d'un ensemble de tâches:
 
 #### Structure du labyrinthe:
 
-- Quand le jeux est initialisé depuis **starter.py**, la méthode "fill_structures" de la classe ModelMaze dans **models.py** récupère la structure des labyrinthes à partir de **levels.txt**.   
+- Quand le jeux est initialisé depuis **starter.py**, la méthode "fill_structures" de la classe ModelMaze dans **models.py** récupère la structure des labyrinthes à partir de **file/levels.txt**.   
 Un labyrinthe contient 15 lignes de 15 caractères:
     - "j" = joueur
     - "m" = mur
