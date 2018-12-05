@@ -5,7 +5,7 @@
 ### Installation 
 * Télécharger le repository.
 * Utiliser un **environnement virtuel** est recommandé.
-    * Exécuter la ligne de commande : `python3 -m venv <path/to/new/virtual/environment>`  
+    * Exécuter la ligne de commande : `python3 -m venv <path/to/new/virtual/environment>`
     puis `source <path/to/venv>/bin/activate` depuis MacOS  
     ou `<path/to/venv>\Scripts\activate.bat`depuis Windows
 * Installer les dépendances : `pip install -r requirements.txt`
@@ -53,7 +53,7 @@ Chaque modèle représente une entité utile au jeu:
 
 Les managers, dans **managers.py**, gèrent la logique du code, ils vont demander aux modèles les données et les analyser pour prendre des décisions.  
 Chaque manager s'occupe d'un ensemble de tâches:
-- **GameManager** s'occupe du déroulement des différents états du jeu. (Affichage du menu, affichage du jeu, affichage du résultat).
+- **GameManager** s'occupe du déroulement des différents états du jeu (affichage du jeu, affichage du résultat).
     - Chaque état de jeu possède des données qui leurs sont propres, ses données sont stockers dans **states.py**, on y trouves LevelState et WinScreenState, LoseScreenState. 
 - **InputManager** s'occupe de la gestion des touches du clavier disponible pour chaque état du jeu.
 - **MotionManager** s'occupe du déplacement du personnage dans un labyrinthe.
