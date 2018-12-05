@@ -135,7 +135,7 @@ class GameManager(object):
         state.maze.character.name_of_picked_objects.add(object_name)
 
         if len(state.maze.character.name_of_picked_objects) == len(state.maze.objects_name):
-            state.maze.character.character_message += "\n You made a syringe with ether."
+            state.maze.character.character_message += "\n You made ether's syringe."
 
     @staticmethod
     def face_guardian():
