@@ -5,14 +5,14 @@ from random import randint
 from enum import Enum
 
 
-class ModelTile(object):
+class ModelTile:
     """This class represents all the information on each of the tiles of the labyrinth"""
 
     def __init__(self, i, j, reachable):
         """
-        :param i:
-        :param j:
-        :param reachable:
+        :param i: Integer
+        :param j: Integer
+        :param reachable: Boolean
         """
         self.reachable = reachable
 
@@ -28,7 +28,7 @@ class ModelTile(object):
         self.object_name = None
 
 
-class ModelScreen(object):
+class ModelScreen:
     """This class represents all the information about the screen """
     __instance = None
 
@@ -63,7 +63,7 @@ class ModelScreen(object):
         self.display.blit(self.printer_surface, (0, 0))
 
 
-class ModelMaze(object):
+class ModelMaze:
     """ This class takes care of reading the file "levels.txt" to obtain the structures of the labyrinths
         and draw one of its structures on the playing surface """
 
@@ -128,7 +128,7 @@ class ModelMaze(object):
                 self.structures[level_in_the_loop].append(structure_of_the_line)
 
     def generate_tiles(self, level):
-        # GENERATE TILE FOR THE LEVEL ASK #
+        # GENERATE TILE FOR THE WANTED LEVEL #
         self.tiles = {}
         structure = self.structures[level]
         self.__fill_geometry(structure)
@@ -206,7 +206,7 @@ class ModelMaze(object):
 Status = Enum('Status', 'process win lose')
 
 
-class ModelCharacter(object):
+class ModelCharacter:
     """This class represents all the informations about the character"""
 
     def __init__(self, tile_player: ModelTile):

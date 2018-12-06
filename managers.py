@@ -7,7 +7,7 @@ from states import LevelState, LoseScreenState, WinScreenState
 from models import Status
 
 
-class Store(object):
+class Store:
     """this class deals with the management of different states"""
 
     __instance = None
@@ -64,8 +64,8 @@ class Store(object):
         self.selected_state.quit = True
 
 
-class GameManager(object):
-    """this class have the dispatcher method for send a action to all managers"""
+class GameManager:
+    """this class deals with the smooth running of the states"""
 
     @staticmethod
     def update_graphic_callback():
@@ -125,6 +125,7 @@ class GameManager(object):
 
     @staticmethod
     def collect_item(object_name):
+        """ recover the item that the character wants to pick up """
         store = Store.get_instance()
         state = store.get_state()
 
@@ -139,6 +140,7 @@ class GameManager(object):
 
     @staticmethod
     def face_guardian():
+        """ determines the state of the player (lose or win) when he appears in front of the guardian """
         store = Store.get_instance()
         state = store.get_state()
 
@@ -153,8 +155,8 @@ class GameManager(object):
         GameManager.next_state()
 
 
-class InputManager(object):
-    """this class allows you to listen to the keys on the keyboard"""
+class InputManager:
+    """ this class allows you to listen to the keys on the keyboard """
 
     @staticmethod
     def reboot_state_callback():
@@ -193,7 +195,7 @@ class InputManager(object):
                     break
 
 
-class LogManager(object):
+class LogManager:
     """this class can display all the messages on the screen"""
 
     @staticmethod
@@ -231,7 +233,7 @@ class LogManager(object):
                 text = font.render(line, True, pg_var.color.THECOLORS['white'])
                 text_position = text.get_rect()
                 text_position.centerx = state.screen.printer_surface.get_rect().centerx
-                text_position.centery = state.screen.printer_surface.get_rect().centery + 10 + i * 20
+                text_position.centery = state.screen.printer_surface.get_rect().centery + 5 + i * 25
                 state.screen.printer_surface.blit(text, text_position)
 
             # render printer surface to the main display
@@ -254,8 +256,8 @@ class LogManager(object):
                 state.screen.display.blit(label, text_position)
 
 
-class MotionManager(object):
-    """ A game manager that handles entities movements """
+class MotionManager:
+    """ A manager that handles entities movements """
 
     @staticmethod
     def face_guardian_callback():
@@ -316,8 +318,8 @@ class MotionManager(object):
                     target_tile.object_name = None
 
 
-class GraphicManager(object):
-    """ A game manager that handles graphics rendering """
+class GraphicManager:
+    """ A manager that handles graphics rendering """
 
     # render the images of all tiles from the LevelState
     @staticmethod
