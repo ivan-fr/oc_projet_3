@@ -6,7 +6,7 @@ from enum import Enum
 
 
 class ModelTile:
-    """This class represents all the information on each of the tiles of the labyrinth"""
+    """This class represents all the informations on each of the tiles of the labyrinth"""
 
     def __init__(self, i, j, reachable):
         """
@@ -29,7 +29,7 @@ class ModelTile:
 
 
 class ModelScreen:
-    """This class represents all the information about the screen """
+    """This class represents all the informations about the screen """
     __instance = None
 
     def __init__(self):
