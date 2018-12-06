@@ -21,9 +21,6 @@ dépôt Github: https://github.com/ivan-fr/oc_projet_3
 
 Programme écrit en Python3 grâce au module Pygame.
 
-# Problèmes rencontrés
-J'ai rencontré des difficultés avec la gestion de l'affichage de la fenêtre avec les fonctions fournie par pygame.
-
 ## Fonctionnalités
 
 - Il n'y a qu'un seul niveau. La structure (départ, emplacement des murs, arrivée), est enregistrée dans un 
@@ -70,3 +67,7 @@ Un labyrinthe contient 15 lignes de 15 caractères:
     - "m" = mur
     - "0" = case vide
     - "a" = gardien
+    
+# Problèmes rencontrés
+J'ai rencontré des difficultés avec la gestion de l'affichage de la fenêtre avec les fonctions fournies par pygame.  
+Pour résoudre ces difficultés j'ai regardé la documentation de pygame de manière plus approfondie, et, j'ai cherché des solutions à mes problèmes sur des sites comme stackoverflow.
