@@ -8,7 +8,7 @@ from models import Status
 
 
 class Store:
-    """this class deals with the management of different states"""
+    """this class gives access to different states"""
 
     __instance = None
 
