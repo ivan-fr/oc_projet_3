@@ -156,7 +156,7 @@ class GameManager:
 
 
 class InputManager:
-    """ this class allows you to listen to the keys on the keyboard """
+    """ this class allows you to listen keys on the keyboard """
 
     @staticmethod
     def reboot_state_callback():
@@ -196,7 +196,7 @@ class InputManager:
 
 
 class LogManager:
-    """this class can display all the messages on the screen"""
+    """this class display all the messages on the screen"""
 
     @staticmethod
     def update_log():
