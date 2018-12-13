@@ -135,7 +135,6 @@ class GameManager:
             state.data_for_next_state['missing_object'] = state.maze.objects_name - \
                                                           state.maze.character.name_of_picked_objects
             store.selected_state = LoseScreenState(**state.data_for_next_state)
-            print("lddsfoisfdiosdfji")
 
 
 class InputManager:
