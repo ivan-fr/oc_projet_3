@@ -51,7 +51,7 @@ Chaque modèle représente une entité utile au jeu:
 Les managers, dans **managers.py**, gèrent la logique du code, ils vont demander aux modèles les données et les analyser pour prendre des décisions.  
 Chaque manager s'occupe d'un ensemble de tâches:
 - **GameManager** s'occupe du déroulement des différents états du jeu (affichage du jeu, affichage du résultat).
-    - Chaque état de jeu possède des données qui leurs sont propres, ses données sont stockers dans **states.py**, on y trouves LevelState et WinScreenState, LoseScreenState. 
+    - Chaque état de jeu possède des données qui leurs sont propres, ses données sont stockers dans **states.py**, on y trouves **LevelScreenState**, **WinScreenState** et **LoseScreenState**. 
 - **InputManager** s'occupe de la gestion des touches du clavier disponible pour chaque état du jeu.
 - **MotionManager** s'occupe du déplacement du personnage dans un labyrinthe.
 - **GraphicManager** s'occupe d'afficher les cellules d'un labyrinthe sur l'écran.
