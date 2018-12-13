@@ -41,6 +41,8 @@ fichier pour la modifier facilement au besoin.
 ## Présentation du projet :
 Mon code est écris avec le design pattern MVC (modèle - vue - contrôleur).  
   
+Tout d'abord le programme se décompose en trois fichiers principaux, on a : **models.py**, **states.py** et **managers.py**.  
+
 Les modèles, dans **models.py**, permetttent de stocker les informations « brutes » utilisées par la logique du jeu. 
 Chaque modèle représente une entité utile au jeu:
 - **ModelScreen** stock les informations liées à la fenêtre d'affichage du jeu.
@@ -48,10 +50,16 @@ Chaque modèle représente une entité utile au jeu:
 - **ModelTile** stock les informations liées à chaque case d'un labyrinthe.
 - **ModelCharacter** stock les informations liées au personnage (le joueur).
 
+Les states, dans **states.py**, représentent les données associé à chaque état de jeux.  
+Les états de jeux sont l'écran du labyrinthe, l'écran de partie gagné et l'écran de parti perdu.  
+Chaque état est lié à différents model selon le contexte :
+- **LevelScreenState** est lié au **ModelMaze** et au **ModelScreen**
+- **LoseScreenState** est lié à **ModelScreen**
+- **WinScreenState** est lié à **ModelScreen**
+
 Les managers, dans **managers.py**, gèrent la logique du code, ils vont demander aux modèles les données et les analyser pour prendre des décisions.  
 Chaque manager s'occupe d'un ensemble de tâches:
-- **GameManager** s'occupe du déroulement des différents états du jeu (affichage du jeu, affichage du résultat).
-    - Chaque état de jeu possède des données qui leurs sont propres, ses données sont stockers dans **states.py**, on y trouves **LevelScreenState**, **WinScreenState** et **LoseScreenState**. 
+- **GameManager** s'occupe du bon déroulement des différents états (les states) du jeu (affichage du jeu, affichage du résultat).
 - **InputManager** s'occupe de la gestion des touches du clavier disponible pour chaque état du jeu.
 - **MotionManager** s'occupe du déplacement du personnage dans un labyrinthe.
 - **GraphicManager** s'occupe d'afficher les cellules d'un labyrinthe sur l'écran.
