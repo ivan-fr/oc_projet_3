@@ -17,11 +17,11 @@ class State(ABC):
         self.title = None
 
 
-class LevelState(State):
+class LevelScreenState(State):
     """this class requires the display of the levels"""
 
     def __init__(self):
-        super(LevelState, self).__init__()
+        super(LevelScreenState, self).__init__()
         self.maze = ModelMaze.get_instance()
         self.listen['key'] += ('K_UP', 'K_DOWN', 'K_LEFT', 'K_RIGHT', 'K_p')
         self.level_cursor = 0

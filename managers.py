@@ -3,7 +3,7 @@ from pygame import locals as pg_var
 
 from constants import *
 
-from states import LevelState, LoseScreenState, WinScreenState
+from states import LevelScreenState, LoseScreenState, WinScreenState
 from models import Status
 
 
@@ -19,7 +19,7 @@ class Store:
         else:
             Store.__instance = self
 
-        self.selected_state = LevelState()
+        self.selected_state = LevelScreenState()
 
     @staticmethod
     def get_instance():
@@ -38,7 +38,7 @@ class Store:
 
     def next_state(self):
         if self.selected_state:
-            if type(self.selected_state) == LevelState:
+            if type(self.selected_state) == LevelScreenState:
                 self.selected_state.increment_level()
                 if not self.selected_state.next_state:
                     self.selected_state.maze.generate_tiles(LEVELS[self.selected_state.level_cursor])
@@ -48,17 +48,17 @@ class Store:
                 self.selected_state.next_state = True
 
     def set_initial(self):
-        self.selected_state = LevelState()
+        self.selected_state = LevelScreenState()
 
     def set_next_state(self):
         if self.selected_state.next_state:
-            if type(self.selected_state) == LevelState:
+            if type(self.selected_state) == LevelScreenState:
                 if self.selected_state.maze.character.status == Status.win:
                     self.selected_state = WinScreenState()
                 elif self.selected_state.maze.character.status == Status.lose:
                     self.selected_state = LoseScreenState(**self.selected_state.data_for_next_state)
             elif type(self.selected_state) == WinScreenState or type(self.selected_state) == LoseScreenState:
-                self.selected_state = LevelState()
+                self.selected_state = LevelScreenState()
 
     def quit_state(self):
         self.selected_state.quit = True
@@ -206,7 +206,7 @@ class LogManager:
 
         font = pygame.font.SysFont("arial", 30)
 
-        if type(state) == LevelState:
+        if type(state) == LevelScreenState:
             # put black background to the printer surface
             state.screen.printer_surface.fill(pg_var.color.THECOLORS['black'])
 
@@ -279,7 +279,7 @@ class MotionManager:
         store = Store.get_instance()
         state = store.get_state()
 
-        if type(state) == LevelState:
+        if type(state) == LevelScreenState:
             # initialization of the status and the character's message
             state.maze.character.character_message = "..."
             source_tile = state.maze.character.player_tile
@@ -327,7 +327,7 @@ class GraphicManager:
         store = Store.get_instance()
         state = store.get_state()
 
-        if type(state) == LevelState:
+        if type(state) == LevelScreenState:
             tiles = state.maze.tiles.values()
 
             for tile in tiles:
