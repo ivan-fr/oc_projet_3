@@ -203,9 +203,6 @@ class ModelMaze:
         return ModelMaze.__instance
 
 
-Status = Enum('Status', 'process win lose')
-
-
 class ModelCharacter:
     """This class represents all the informations about the character"""
 
@@ -213,7 +210,5 @@ class ModelCharacter:
         self.player_tile = tile_player
 
         # The status is used to determine which player has lost or won since the game_loop
-        self.status = Status.process
         self.character_message = "..."
-
         self.name_of_picked_objects = set()

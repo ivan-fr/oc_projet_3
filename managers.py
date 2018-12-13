@@ -4,7 +4,6 @@ from pygame import locals as pg_var
 from constants import *
 
 from states import LevelScreenState, LoseScreenState, WinScreenState
-from models import Status
 
 
 class Store:
@@ -42,22 +41,19 @@ class Store:
                 self.selected_state.increment_level()
                 if not self.selected_state.next_state:
                     self.selected_state.maze.generate_tiles(LEVELS[self.selected_state.level_cursor])
+                    return False
                 else:
                     self.selected_state.maze.tiles = {}
             else:
                 self.selected_state.next_state = True
+        return True
 
     def set_initial(self):
         self.selected_state = LevelScreenState()
 
     def set_next_state(self):
         if self.selected_state.next_state:
-            if type(self.selected_state) == LevelScreenState:
-                if self.selected_state.maze.character.status == Status.win:
-                    self.selected_state = WinScreenState()
-                elif self.selected_state.maze.character.status == Status.lose:
-                    self.selected_state = LoseScreenState(**self.selected_state.data_for_next_state)
-            elif type(self.selected_state) == WinScreenState or type(self.selected_state) == LoseScreenState:
+            if type(self.selected_state) == WinScreenState or type(self.selected_state) == LoseScreenState:
                 self.selected_state = LevelScreenState()
 
     def quit_state(self):
@@ -68,39 +64,24 @@ class GameManager:
     """this class deals with the smooth running of the states"""
 
     @staticmethod
-    def update_graphic_callback():
-        return GraphicManager.update_graphic()
-
-    @staticmethod
-    def update_log_callback():
-        return LogManager.update_log()
-
-    @staticmethod
-    def listen_event_callback(listen):
-        return InputManager.listen_event(listen)
-
-    @staticmethod
     def start():
         """ this method start the game with the main loop """
         game_loop = True
         store = Store.get_instance()
-        state = store.get_state()
 
         while game_loop:
-
+            state = store.get_state()
             if state.reboot or state.next_state:
                 if state.reboot:
                     store.set_initial()
                 elif state.next_state:
                     store.set_next_state()
-
-                state = store.get_state()
             elif state.quit:
                 game_loop = False
             else:
-                GameManager.listen_event_callback(state.listen)
-                GameManager.update_graphic_callback()
-                GameManager.update_log_callback()
+                InputManager.listen_event(state.listen)
+                GraphicManager.update_graphic()
+                LogManager.update_log()
 
                 # refresh the screen
                 pygame.display.flip()
@@ -144,35 +125,21 @@ class GameManager:
         store = Store.get_instance()
         state = store.get_state()
 
-        GameManager.update_graphic_callback()
+        GraphicManager.update_graphic()
 
         # if the player have got all objects in the maze, he win else he lose.
         if len(state.maze.character.name_of_picked_objects) == len(state.maze.objects_name):
-            state.maze.character.status = Status.win
+            if store.next_state():
+                store.selected_state = WinScreenState()
         else:
-            state.maze.character.status = Status.lose
-
-        GameManager.next_state()
+            state.data_for_next_state['missing_object'] = state.maze.objects_name - \
+                                                          state.maze.character.name_of_picked_objects
+            store.selected_state = LoseScreenState(**state.data_for_next_state)
+            print("lddsfoisfdiosdfji")
 
 
 class InputManager:
     """ this class allows you to listen keys on the keyboard """
-
-    @staticmethod
-    def reboot_state_callback():
-        return GameManager.reboot_state()
-
-    @staticmethod
-    def move_callback(direction):
-        return MotionManager.move(direction)
-
-    @staticmethod
-    def next_state_callback():
-        return GameManager.next_state()
-
-    @staticmethod
-    def quit_state_callback():
-        return GameManager.quit()
 
     @staticmethod
     def listen_event(listen):
@@ -180,17 +147,16 @@ class InputManager:
             for _type in listen['type']:
                 if event.type == getattr(pg_var, _type, None):
                     if _type == 'QUIT':
-                        InputManager.quit_state_callback()
+                        GameManager.quit()
                     elif _type == 'KEYDOWN':
                         for _key in listen['key']:
                             if event.key == getattr(pg_var, _key):
                                 if _key == 'K_ESCAPE':
-                                    InputManager.reboot_state_callback()
+                                    GameManager.reboot_state()
                                 elif _key in ('K_UP', 'K_DOWN', 'K_LEFT', 'K_RIGHT'):
-                                    InputManager.move_callback(_key)
-
+                                    MotionManager.move(_key)
                                 elif _key == 'K_RETURN':
-                                    InputManager.next_state_callback()
+                                    GameManager.next_state()
                                 break
                     break
 
@@ -259,14 +225,6 @@ class LogManager:
 class MotionManager:
     """ A manager that handles entities movements """
 
-    @staticmethod
-    def face_guardian_callback():
-        return GameManager.face_guardian()
-
-    @staticmethod
-    def collect_item_callback(object_name):
-        return GameManager.collect_item(object_name)
-
     direction_dict = {'K_LEFT': lambda x, y: (x - 1, y),
                       'K_RIGHT': lambda x, y: (x + 1, y),
                       'K_UP': lambda x, y: (x, y - 1),
@@ -306,14 +264,14 @@ class MotionManager:
                     # remove the exit_image
                     target_tile.exit_image = None
 
-                    MotionManager.face_guardian_callback()
+                    GameManager.face_guardian()
 
                 # else if the current_tile have an object image, the player get the object
                 elif target_tile.object_image:
                     # clean the tile
                     target_tile.object_image = None
 
-                    MotionManager.collect_item_callback(target_tile.object_name)
+                    GameManager.collect_item(target_tile.object_name)
 
                     target_tile.object_name = None
 

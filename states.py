@@ -1,7 +1,7 @@
 from abc import ABC
 
 from constants import *
-from models import ModelScreen, ModelMaze, Status
+from models import ModelScreen, ModelMaze
 
 
 class State(ABC):
@@ -36,15 +36,7 @@ class LevelScreenState(State):
         except IndexError:
             self.next_state = True
         else:
-
-            if self.maze.character.status == Status.lose:
-                self.next_state = True
-            else:
-                self.title = LEVELS[self.level_cursor]
-
-        if self.next_state and self.maze.character.status == Status.lose:
-            self.data_for_next_state['missing_object'] = self.maze.objects_name - \
-                                                         self.maze.character.name_of_picked_objects
+            self.title = LEVELS[self.level_cursor]
 
 
 class LoseScreenState(State):
