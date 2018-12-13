@@ -50,14 +50,14 @@ Chaque modèle représente une entité utile au jeu:
 - **ModelTile** stock les informations liées à chaque case d'un labyrinthe.
 - **ModelCharacter** stock les informations liées au personnage (le joueur).
 
-Les states, dans **states.py**, représentent les données associé à chaque état de jeux.  
-Les états de jeux sont l'écran du labyrinthe, l'écran de partie gagné et l'écran de parti perdu.  
-Chaque état est lié à différents model selon le contexte :
+Les states, dans **states.py**, représentent les données associées à chaque état de jeux.  
+Les états de jeux sont l'écran du labyrinthe, l'écran de partie gagnée et l'écran de partie perdu. 
+Chaque État est lié à différents modèles selon le contexte :
 - **LevelScreenState** est lié au **ModelMaze** et au **ModelScreen**
 - **LoseScreenState** est lié à **ModelScreen**
 - **WinScreenState** est lié à **ModelScreen**
 
-Les managers, dans **managers.py**, gèrent la logique du code, ils vont demander aux modèles les données et les analyser pour prendre des décisions.  
+Les managers, dans **managers.py**, gèrent la logique du code, ils vont demander aux states, dans **states.py**, les données contenue dans leurs modèles et les analyser pour prendre des décisions.  
 Chaque manager s'occupe d'un ensemble de tâches:
 - **GameManager** s'occupe du bon déroulement des différents états (les states) du jeu (affichage du jeu, affichage du résultat).
 - **InputManager** s'occupe de la gestion des touches du clavier disponible pour chaque état du jeu.
