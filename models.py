@@ -2,7 +2,6 @@ import pygame
 from constants import *
 
 from random import randint
-from enum import Enum
 
 
 class ModelTile:
