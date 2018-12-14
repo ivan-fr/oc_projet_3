@@ -90,21 +90,6 @@ class GameManager:
             state.screen.clock.tick(20)
 
     @staticmethod
-    def next_state():
-        store = Store.get_instance()
-        store.next_state()
-
-    @staticmethod
-    def reboot_state():
-        store = Store.get_instance()
-        store.reboot_state()
-
-    @staticmethod
-    def quit():
-        store = Store.get_instance()
-        store.quit_state()
-
-    @staticmethod
     def collect_item(object_name):
         """ recover the item that the character wants to pick up """
         store = Store.get_instance()
@@ -142,20 +127,22 @@ class InputManager:
 
     @staticmethod
     def listen_event(listen):
+        store = Store.get_instance()
+
         for event in pygame.event.get():
             for _type in listen['type']:
                 if event.type == getattr(pg_var, _type, None):
                     if _type == 'QUIT':
-                        GameManager.quit()
+                        store.quit_state()
                     elif _type == 'KEYDOWN':
                         for _key in listen['key']:
                             if event.key == getattr(pg_var, _key):
                                 if _key == 'K_ESCAPE':
-                                    GameManager.reboot_state()
+                                    store.reboot_state()
                                 elif _key in ('K_UP', 'K_DOWN', 'K_LEFT', 'K_RIGHT'):
                                     MotionManager.move(_key)
                                 elif _key == 'K_RETURN':
-                                    GameManager.next_state()
+                                    store.next_state()
                                 break
                     break
 
