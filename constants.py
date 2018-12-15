@@ -1,4 +1,6 @@
 import os
+from enum import Enum
+
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 folder = os.path.basename(os.getcwd())
@@ -24,3 +26,5 @@ IMAGE_PLAYER = os.path.join(BASE_DIR, folder + "/images/MacGyver.png")
 IMAGE_NEEDLE = os.path.join(BASE_DIR, folder + "/images/needle.png")
 IMAGE_TUBE = os.path.join(BASE_DIR, folder + "/images/tube.png")
 IMAGE_ETHER = os.path.join(BASE_DIR, folder + "/images/ether.png")
+
+DIRECTION = Enum('direction', 'K_UP K_DOWN K_LEFT K_RIGHT')

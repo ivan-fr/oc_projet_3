@@ -19,6 +19,7 @@ class Store:
             Store.__instance = self
 
         self.selected_state = LevelScreenState()
+        self.object_next_state = None
 
     @staticmethod
     def get_instance():
@@ -53,7 +54,10 @@ class Store:
 
     def set_next_state(self):
         if self.selected_state.next_state:
-            if type(self.selected_state) == WinScreenState or type(self.selected_state) == LoseScreenState:
+            if type(self.selected_state) == LevelScreenState:
+                self.selected_state = self.object_next_state
+                self.object_next_state = None
+            elif type(self.selected_state) == WinScreenState or type(self.selected_state) == LoseScreenState:
                 self.selected_state = LevelScreenState()
 
     def quit_state(self):
@@ -68,9 +72,11 @@ class GameManager:
         """ this method start the game with the main loop """
         game_loop = True
         store = Store.get_instance()
+        GraphicManager.update_graphic()
 
         while game_loop:
             state = store.get_state()
+
             if state.reboot or state.next_state:
                 if state.reboot:
                     store.set_initial()
@@ -83,26 +89,8 @@ class GameManager:
                 GraphicManager.update_graphic()
                 LogManager.update_log()
 
-                # refresh the screen
-                pygame.display.flip()
-
-            # Limit to 20 FPS
-            state.screen.clock.tick(20)
-
-    @staticmethod
-    def next_state():
-        store = Store.get_instance()
-        store.next_state()
-
-    @staticmethod
-    def reboot_state():
-        store = Store.get_instance()
-        store.reboot_state()
-
-    @staticmethod
-    def quit():
-        store = Store.get_instance()
-        store.quit_state()
+                # Limit to 20 FPS
+                state.screen.clock.tick(20)
 
     @staticmethod
     def collect_item(object_name):
@@ -130,11 +118,12 @@ class GameManager:
         # if the player have got all objects in the maze, he win else he lose.
         if len(state.maze.character.name_of_picked_objects) == len(state.maze.objects_name):
             if store.next_state():
-                store.selected_state = WinScreenState()
+                store.object_next_state = WinScreenState()
         else:
-            state.data_for_next_state['missing_object'] = state.maze.objects_name - \
-                                                          state.maze.character.name_of_picked_objects
-            store.selected_state = LoseScreenState(**state.data_for_next_state)
+            state.next_state = True
+            missing_object = state.maze.objects_name - state.maze.character.name_of_picked_objects
+            state.data_for_next_state['missing_object'] = missing_object
+            store.object_next_state = LoseScreenState(**state.data_for_next_state)
 
 
 class InputManager:
@@ -142,20 +131,22 @@ class InputManager:
 
     @staticmethod
     def listen_event(listen):
+        store = Store.get_instance()
+
         for event in pygame.event.get():
             for _type in listen['type']:
                 if event.type == getattr(pg_var, _type, None):
                     if _type == 'QUIT':
-                        GameManager.quit()
+                        store.quit_state()
                     elif _type == 'KEYDOWN':
                         for _key in listen['key']:
                             if event.key == getattr(pg_var, _key):
                                 if _key == 'K_ESCAPE':
-                                    GameManager.reboot_state()
+                                    store.reboot_state()
                                 elif _key in ('K_UP', 'K_DOWN', 'K_LEFT', 'K_RIGHT'):
-                                    MotionManager.move(_key)
+                                    MotionManager.move(getattr(DIRECTION, _key))
                                 elif _key == 'K_RETURN':
-                                    GameManager.next_state()
+                                    store.next_state()
                                 break
                     break
 
@@ -220,14 +211,17 @@ class LogManager:
                 text_position.centery = state.screen.display.get_rect().centery - 130
                 state.screen.display.blit(label, text_position)
 
+        # refresh the screen
+        pygame.display.flip()
+
 
 class MotionManager:
     """ A manager that handles entities movements """
 
-    direction_dict = {'K_LEFT': lambda x, y: (x - 1, y),
-                      'K_RIGHT': lambda x, y: (x + 1, y),
-                      'K_UP': lambda x, y: (x, y - 1),
-                      'K_DOWN': lambda x, y: (x, y + 1)}
+    direction_dict = {DIRECTION.K_LEFT: lambda x, y: (x - 1, y),
+                      DIRECTION.K_RIGHT: lambda x, y: (x + 1, y),
+                      DIRECTION.K_UP: lambda x, y: (x, y - 1),
+                      DIRECTION.K_DOWN: lambda x, y: (x, y + 1)}
 
     @classmethod
     def move(cls, direction):
@@ -286,7 +280,6 @@ class GraphicManager:
 
         if type(state) == LevelScreenState:
             tiles = state.maze.tiles.values()
-
             for tile in tiles:
                 x = tile.i * state.maze.geometry['length_side_rectangle_on_horizontal_axis']
                 y = tile.j * state.maze.geometry['length_side_rectangle_on_vertical_axis']
@@ -303,3 +296,6 @@ class GraphicManager:
                         state.screen.surface_game.blit(tile.player_image, (x, y))
 
             state.screen.blit_surface_game()
+
+            # refresh the screen
+            pygame.display.flip()
