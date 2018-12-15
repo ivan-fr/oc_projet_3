@@ -54,7 +54,7 @@ Chaque modèle représente une entité utile au jeu:
 Les states, dans **states.py**, représentent les données associées à chaque état de jeux.  
 Les états de jeux sont l'écran du labyrinthe, l'écran de partie gagnée et l'écran de partie perdu. 
 Chaque État est lié à différents modèles selon le contexte :
-- **LevelScreenState** est lié au **ModelMaze** et au **ModelScreen**
+- **LevelScreenState** est lié à **ModelMaze** et à **ModelScreen**
 - **LoseScreenState** est lié à **ModelScreen**
 - **WinScreenState** est lié à **ModelScreen**
 
