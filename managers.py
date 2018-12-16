@@ -70,7 +70,6 @@ class GameManager:
         """ this method start the game with the main loop """
         game_loop = True
         store = Store.get_instance()
-        GraphicManager.update_graphic()
 
         while game_loop:
             state = store.get_state()
