@@ -4,6 +4,7 @@
 
 ### Installation 
 * Télécharger le repository.
+  - `git clone https://github.com/ivan-fr/oc_projet_3`
 * Utiliser un **environnement virtuel** est recommandé.
     * Exécuter la ligne de commande : `python3 -m venv <path/to/new/virtual/environment>`
     puis `source <path/to/venv>/bin/activate` depuis MacOS  
@@ -23,9 +24,7 @@ Programme écrit en Python3 grâce au module Pygame.
 
 ## Fonctionnalités
 
-- Il n'y a qu'un seul niveau. La structure (départ, emplacement des murs, arrivée), est enregistrée dans un 
-fichier pour la modifier facilement au besoin.
-
+- Il n'y a qu'un seul niveau. La structure (départ, emplacement des murs, arrivée), est enregistrée dans un fichier pour la modifier facilement au besoin.
 - MacGyver est contrôlé par les touches directionnelles du clavier.
 - Les objets sont répartis aléatoirement dans le labyrinthe et change d’emplacement si l'utilisateur ferme le jeu et le relance.
 - La fenêtre du jeu sera un carré pouvant afficher 15 sprites sur la longueur.
@@ -53,7 +52,7 @@ Chaque modèle représente une entité utile au jeu:
 Les states, dans **states.py**, représentent les données associées à chaque état de jeux.  
 Les états de jeux sont l'écran du labyrinthe, l'écran de partie gagnée et l'écran de partie perdu.  
 Chaque État est lié à différents modèles selon le contexte :
-- **LevelScreenState** est lié au **ModelMaze** et au **ModelScreen**
+- **LevelScreenState** est lié à **ModelMaze** et à **ModelScreen**
 - **LoseScreenState** est lié à **ModelScreen**
 - **WinScreenState** est lié à **ModelScreen**
 

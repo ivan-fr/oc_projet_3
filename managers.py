@@ -113,7 +113,7 @@ class GameManager:
         store = Store.get_instance()
         state = store.get_state()
 
-        GraphicManager.update_graphic(1)
+        GraphicManager.update_graphic()
 
         # if the player have got all objects in the maze, he win else he lose.
         if len(state.maze.character.name_of_picked_objects) == len(state.maze.objects_name):
@@ -121,8 +121,8 @@ class GameManager:
                 store.object_next_state = WinScreenState()
         else:
             state.next_state = True
-            state.data_for_next_state['missing_object'] = state.maze.objects_name - \
-                                                          state.maze.character.name_of_picked_objects
+            missing_object = state.maze.objects_name - state.maze.character.name_of_picked_objects
+            state.data_for_next_state['missing_object'] = missing_object
             store.object_next_state = LoseScreenState(**state.data_for_next_state)
 
 
@@ -274,7 +274,7 @@ class GraphicManager:
 
     # render the images of all tiles from the LevelState
     @staticmethod
-    def update_graphic(popo=None):
+    def update_graphic():
         store = Store.get_instance()
         state = store.get_state()
 
@@ -295,7 +295,7 @@ class GraphicManager:
                     if tile.player_image:
                         state.screen.surface_game.blit(tile.player_image, (x, y))
 
-        state.screen.blit_surface_game()
+            state.screen.blit_surface_game()
 
-        # refresh the screen
-        pygame.display.flip()
+            # refresh the screen
+            pygame.display.flip()
