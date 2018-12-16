@@ -51,19 +51,22 @@ Chaque modèle représente une entité utile au jeu:
 - **ModelCharacter** stock les informations liées au personnage (le joueur).
 
 Les states, dans **states.py**, représentent les données associées à chaque état de jeux.  
-Les états de jeux sont l'écran du labyrinthe, l'écran de partie gagnée et l'écran de partie perdu. 
+Les états de jeux sont l'écran du labyrinthe, l'écran de partie gagnée et l'écran de partie perdu.  
 Chaque État est lié à différents modèles selon le contexte :
 - **LevelScreenState** est lié au **ModelMaze** et au **ModelScreen**
 - **LoseScreenState** est lié à **ModelScreen**
 - **WinScreenState** est lié à **ModelScreen**
 
-Les managers, dans **managers.py**, gèrent la logique du code, ils vont demander aux states, dans **states.py**, les données contenue dans leurs modèles et les analyser pour prendre des décisions.  
+Les managers, dans **managers.py**, gèrent la logique du code, ils vont demander aux states, dans **states.py**, les données, contenue dans leurs modèles et les analyser pour prendre des décisions.  
 Chaque manager s'occupe d'un ensemble de tâches:
 - **GameManager** s'occupe du bon déroulement des différents états (les states) du jeu (affichage du jeu, affichage du résultat).
 - **InputManager** s'occupe de la gestion des touches du clavier disponible pour chaque état du jeu.
 - **MotionManager** s'occupe du déplacement du personnage dans un labyrinthe.
 - **GraphicManager** s'occupe d'afficher les cellules d'un labyrinthe sur l'écran.
 - **LogManager** s'occupe d'afficher tous les messages sur l'écran.
+
+Dans **manager.py** on peut également trouver **Store**. Cette classe permet de donner à un manager, s'il le souhaite, l'état courant (le **state** courant) afin que ledit manager puisse manipuler les données provenant de l'état (du **state**).  
+Je rappelle que seuls les états (les **states**) sont reliés aux modèles. 
 
 **GraphicManager** et **LogManager** peuvent être considérés comme des vues.
 
