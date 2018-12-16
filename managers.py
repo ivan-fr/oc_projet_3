@@ -43,8 +43,6 @@ class Store:
                 if not self.selected_state.next_state:
                     self.selected_state.maze.generate_tiles(LEVELS[self.selected_state.level_cursor])
                     return False
-                else:
-                    self.selected_state.maze.tiles = {}
             else:
                 self.selected_state.next_state = True
         return True

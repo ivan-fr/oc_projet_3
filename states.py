@@ -34,6 +34,7 @@ class LevelScreenState(State):
         try:
             LEVELS[self.level_cursor]
         except IndexError:
+            self.maze.tiles = {}
             self.next_state = True
         else:
             self.title = LEVELS[self.level_cursor]
