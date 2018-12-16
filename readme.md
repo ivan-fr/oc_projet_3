@@ -4,6 +4,7 @@
 
 ### Installation 
 * Télécharger le repository.
+  - `git clone https://github.com/ivanfr/oc_projet_3
 * Utiliser un **environnement virtuel** est recommandé.
     * Exécuter la ligne de commande : `python3 -m venv <path/to/new/virtual/environment>`
     puis `source <path/to/venv>/bin/activate` depuis MacOS  
@@ -50,12 +51,12 @@ Chaque modèle représente une entité utile au jeu:
 
 Les states, dans **states.py**, représentent les données associées à chaque état de jeux.  
 Les états de jeux sont l'écran du labyrinthe, l'écran de partie gagnée et l'écran de partie perdu.  
-Chaque État est lié à différents modèles selon le contexte :
-- **LevelScreenState** est lié à **ModelMaze** et à **ModelScreen**
-- **LoseScreenState** est lié à **ModelScreen**
-- **WinScreenState** est lié à **ModelScreen**
+Chaque état est relié à différents modèles selon le contexte :
+- **LevelScreenState** est relié à **ModelMaze** et à **ModelScreen**
+- **LoseScreenState** est relié à **ModelScreen**
+- **WinScreenState** est relié à **ModelScreen**
 
-Les managers, dans **managers.py**, gèrent la logique du code, ils vont demander aux states, dans **states.py**, les données, contenue dans leurs modèles et les analyser pour prendre des décisions.  
+Les managers, dans **managers.py**, gèrent la logique du code, ils vont demander aux states, dans **states.py**, les données contenue dans leurs modèles et les analyser pour prendre des décisions.  
 Chaque manager s'occupe d'un ensemble de tâches:
 - **GameManager** s'occupe du bon déroulement des différents états (les states) du jeu (affichage du jeu, affichage du résultat).
 - **InputManager** s'occupe de la gestion des touches du clavier disponible pour chaque état du jeu.
@@ -63,8 +64,8 @@ Chaque manager s'occupe d'un ensemble de tâches:
 - **GraphicManager** s'occupe d'afficher les cellules d'un labyrinthe sur l'écran.
 - **LogManager** s'occupe d'afficher tous les messages sur l'écran.
 
-Dans **manager.py** on peut également trouver **Store**. Cette classe permet de donner à un manager, s'il le souhaite, l'état courant (le **state** courant) afin que ledit manager puisse manipuler les données provenant de l'état (du **state**).  
-Je rappelle que seuls les états (les **states**) sont reliés aux modèles. 
+Dans **manager.py** on peut également trouver la classe **Store**. Cette classe permet de donner à un manager, s'il le souhaite, l'état courant (le **state** courant) afin que ledit manager puisse manipuler les données provenant de l'état (du **state**).  
+Je rappelle que seuls les états (les **states**) sont reliés à des modèles. 
 
 **GraphicManager** et **LogManager** peuvent être considérés comme des vues.
 
