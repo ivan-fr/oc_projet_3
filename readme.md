@@ -40,7 +40,7 @@ Programme écrit en Python3 grâce au module Pygame.
 ## Présentation du projet :
 Mon code est écris avec le design pattern MVC (modèle - vue - contrôleur).  
   
-Tout d'abord le programme se décompose en trois fichiers principaux, on a : **models.py**, **states.py** et **managers.py**.  
+Tout d'abord le programme se décompose en cinq fichiers principaux, on a : **models.py**, **states.py**, **managers.py**, **views.py** et **store.py**.  
 
 Les modèles, dans **models.py**, permetttent de stocker les informations « brutes » utilisées par la logique du jeu. 
 Chaque modèle représente une entité utile au jeu:
@@ -60,14 +60,15 @@ Les managers, dans **managers.py**, gèrent la logique du code, ils vont demande
 Chaque manager s'occupe d'un ensemble de tâches:
 - **GameManager** s'occupe du bon déroulement des différents états (les states) du jeu (affichage du jeu, affichage du résultat).
 - **InputManager** s'occupe de la gestion des touches du clavier disponible pour chaque état du jeu.
-- **MotionManager** s'occupe du déplacement du personnage dans un labyrinthe.
-- **GraphicManager** s'occupe d'afficher les cellules d'un labyrinthe sur l'écran.
-- **LogManager** s'occupe d'afficher tous les messages sur l'écran.
+- **MotionManager** s'occupe du déplacement du personnage dans un labyrinthe.  
 
-Dans **manager.py** on peut également trouver la classe **Store**. Cette classe permet de donner à un manager, s'il le souhaite, l'état courant (le **state** courant) afin que ledit manager puisse manipuler les données provenant de l'état (du **state**).  
-Je rappelle que seuls les états (les **states**) sont reliés à des modèles. 
+Les vues, dans **views.py**, s'occupent de lire les modèles via les states, dans **state.py**, et d'afficher du contenu (résultant de la lecture) à l'écran.  
+Chaque vue s'occupe d'afficher leur propre interface:
+- **GraphicView** s'occupe d'afficher les cellules d'un labyrinthe sur l'écran.
+- **LogView** s'occupe d'afficher tous les messages sur l'écran.
 
-**GraphicManager** et **LogManager** peuvent être considérés comme des vues.
+La classe **Store**, dans **store.py**. Cette classe permet de donner à un manager ou à une vue, s'il le souhaite, l'état courant (le **state** courant) afin que ledit manager puisse manipuler les données provenant de l'état (du **state**).  
+Je préçises que seuls les états (les **states**) sont reliés à des modèles. 
 
 #### Structure du labyrinthe:
 
