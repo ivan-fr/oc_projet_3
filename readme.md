@@ -58,7 +58,7 @@ Chaque état est relié à différents modèles selon le contexte :
 
 Les managers, dans **managers.py**, gèrent la logique du code, ils vont demander aux states, dans **states.py**, les données contenue dans leurs modèles et les analyser pour prendre des décisions.  
 Chaque manager s'occupe d'un ensemble de tâches:
-- **GameManager** s'occupe du bon déroulement des différents états (les states) du jeu (affichage du jeu, affichage du résultat).
+- **GameManager** s'occupe du bon déroulement entre les différents états (les states) du jeu (l'écran du labyrinthe, l'écran de partie gagnée et l'écran de partie perdu).
 - **InputManager** s'occupe de la gestion des touches du clavier disponible pour chaque état du jeu.
 - **MotionManager** s'occupe du déplacement du personnage dans un labyrinthe.  
 
