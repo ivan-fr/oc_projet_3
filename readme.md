@@ -38,7 +38,7 @@ Programme écrit en Python3 grâce au module Pygame.
 --------
 
 ## Présentation du projet :
-Mon code est écris avec le design pattern MVC (modèle - vue - contrôleur).  
+Mon code est écrit avec le design pattern MVC (modèle - vue - contrôleur).  
   
 Tout d'abord le programme se décompose en cinq fichiers principaux, on a : **models.py**, **states.py**, **store.py**, **managers.py** et **views.py**.  
 
@@ -57,7 +57,7 @@ Chaque état est relié à différents modèles selon le contexte :
 - **WinScreenState** est relié à **ModelScreen**
 
 La classe **Store**, dans **store.py**. Cette classe permet de donner à un manager ou à une vue, s'il le souhaite, l'**état** courant afin que ledit manager ou ladite vue puisse manipuler (ou lire) les données provenant de l'**état**.  
-Je préçises que seuls les **états** sont reliés à des modèles.  
+Je précises que seuls les **états** sont reliés à des modèles.  
 
 Les **managers**, dans **managers.py**, gèrent la logique du code, ils vont demander au **Store** les données contenue dans son **état** et les analyser pour prendre des décisions.  
 Chaque manager s'occupe d'un ensemble de tâches:
@@ -70,7 +70,7 @@ Chaque vue s'occupe d'afficher leur propre interface:
 - **GraphicView** s'occupe d'afficher les cellules d'un labyrinthe sur l'écran.
 - **LogView** s'occupe d'afficher tous les messages sur l'écran.
 
-En résumer:  
+En résumé:  
 
 ![Résumer](http://i.imgur.com/Dbuw3e5g.png "Résumer")
 
