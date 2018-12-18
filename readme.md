@@ -68,7 +68,11 @@ Chaque vue s'occupe d'afficher leur propre interface:
 - **LogView** s'occupe d'afficher tous les messages sur l'écran.
 
 Enfin, la classe **Store**, dans **store.py**. Cette classe permet de donner à un manager ou à une vue, s'il le souhaite, l'état courant (le **state** courant) afin que ledit manager ou ladite vue puisse manipuler (ou lire) les données provenant de l'état (du **state**).  
-Je préçises que seuls les états (les **states**) sont reliés à des modèles. 
+Je préçises que seuls les états (les **states**) sont reliés à des modèles.  
+
+En résumer:  
+
+![Résumer](http://i.imgur.com/Dbuw3e5g.png "Résumer")
 
 #### Structure du labyrinthe:
 
