@@ -82,8 +82,8 @@ class GraphicView:
         if type(state) == LevelScreenState:
             tiles = state.maze.tiles.values()
             for tile in tiles:
-                x = tile.i * state.maze.geometry['length_side_rectangle_on_horizontal_axis']
-                y = tile.j * state.maze.geometry['length_side_rectangle_on_vertical_axis']
+                x = tile.j * state.maze.geometry['length_side_rectangle_on_horizontal_axis']
+                y = tile.i * state.maze.geometry['length_side_rectangle_on_vertical_axis']
 
                 if tile.tile_image:
                     state.screen.surface_game.blit(tile.tile_image, (x, y))

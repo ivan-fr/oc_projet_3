@@ -97,10 +97,10 @@ class InputManager:
 class MotionManager:
     """ A manager that handles entities movements """
 
-    direction_dict = {DIRECTION.K_LEFT: lambda x, y: (x - 1, y),
-                      DIRECTION.K_RIGHT: lambda x, y: (x + 1, y),
-                      DIRECTION.K_UP: lambda x, y: (x, y - 1),
-                      DIRECTION.K_DOWN: lambda x, y: (x, y + 1)}
+    direction_dict = {DIRECTION.K_LEFT: lambda x, y: (x, y - 1),
+                      DIRECTION.K_RIGHT: lambda x, y: (x, y + 1),
+                      DIRECTION.K_UP: lambda x, y: (x - 1, y),
+                      DIRECTION.K_DOWN: lambda x, y: (x + 1, y)}
 
     @classmethod
     def move(cls, direction):
