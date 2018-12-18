@@ -40,35 +40,35 @@ Programme écrit en Python3 grâce au module Pygame.
 ## Présentation du projet :
 Mon code est écris avec le design pattern MVC (modèle - vue - contrôleur).  
   
-Tout d'abord le programme se décompose en cinq fichiers principaux, on a : **models.py**, **states.py**, **managers.py**, **views.py** et **store.py**.  
+Tout d'abord le programme se décompose en cinq fichiers principaux, on a : **models.py**, **states.py**, **store.py**, **managers.py** et **views.py**.  
 
-Les modèles, dans **models.py**, permetttent de stocker les informations « brutes » utilisées par la logique du jeu. 
+Les **modèles**, dans **models.py**, permetttent de stocker les informations « brutes » utilisées par la logique du jeu. 
 Chaque modèle représente une entité utile au jeu:
 - **ModelScreen** stock les informations liées à la fenêtre d'affichage du jeu.
 - **ModelMaze** stock les informations liées aux labyrinthes.
 - **ModelTile** stock les informations liées à chaque case d'un labyrinthe.
 - **ModelCharacter** stock les informations liées au personnage (le joueur).
 
-Les states, dans **states.py**, représentent les données associées à chaque état de jeux.  
+Les **états**, dans **states.py**, représentent les données associées à chaque état de jeux.  
 Les états de jeux sont l'écran du labyrinthe, l'écran de partie gagnée et l'écran de partie perdu.  
 Chaque état est relié à différents modèles selon le contexte :
 - **LevelScreenState** est relié à **ModelMaze** et à **ModelScreen**
 - **LoseScreenState** est relié à **ModelScreen**
 - **WinScreenState** est relié à **ModelScreen**
 
-Les managers, dans **managers.py**, gèrent la logique du code, ils vont demander aux states, dans **states.py**, les données contenue dans leurs modèles et les analyser pour prendre des décisions.  
+La classe **Store**, dans **store.py**. Cette classe permet de donner à un manager ou à une vue, s'il le souhaite, l'**état** courant afin que ledit manager ou ladite vue puisse manipuler (ou lire) les données provenant de l'**état**.  
+Je préçises que seuls les **états** sont reliés à des modèles.  
+
+Les **managers**, dans **managers.py**, gèrent la logique du code, ils vont demander au **Store** les données contenue dans son **état** et les analyser pour prendre des décisions.  
 Chaque manager s'occupe d'un ensemble de tâches:
-- **GameManager** s'occupe du bon déroulement entre les différents états (les states) du jeu (l'écran du labyrinthe, l'écran de partie gagnée et l'écran de partie perdu).
+- **GameManager** s'occupe du bon déroulement entre les différents **états** du jeu (l'écran du labyrinthe, l'écran de partie gagnée et l'écran de partie perdu).
 - **InputManager** s'occupe de la gestion des touches du clavier disponible pour chaque état du jeu.
 - **MotionManager** s'occupe du déplacement du personnage dans un labyrinthe.  
 
-Les vues, dans **views.py**, s'occupent de lire les modèles via les states, dans **state.py**, et d'afficher du contenu (résultant de la lecture) à l'écran.  
+Les **vues**, dans **views.py**, s'occupent de lire les données via le **Store** et d'afficher du contenu (résultant de la lecture) à l'écran.  
 Chaque vue s'occupe d'afficher leur propre interface:
 - **GraphicView** s'occupe d'afficher les cellules d'un labyrinthe sur l'écran.
 - **LogView** s'occupe d'afficher tous les messages sur l'écran.
-
-Enfin, la classe **Store**, dans **store.py**. Cette classe permet de donner à un manager ou à une vue, s'il le souhaite, l'état courant (le **state** courant) afin que ledit manager ou ladite vue puisse manipuler (ou lire) les données provenant de l'état (du **state**).  
-Je préçises que seuls les états (les **states**) sont reliés à des modèles.  
 
 En résumer:  
 
