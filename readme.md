@@ -57,7 +57,7 @@ Chaque état est relié à différents modèles selon le contexte :
 - **WinScreenState** est relié à **ModelScreen**
 
 La classe **Store**, dans **store.py**. Cette classe permet de donner à un manager ou à une vue, s'il le souhaite, l'**état** courant afin que ledit manager ou ladite vue puisse manipuler (ou lire) les données provenant de l'**état**.  
-Je précises que seuls les **états** sont reliés à des modèles.  
+Je précise que seuls les **états** sont reliés à des modèles.  
 
 Les **managers**, dans **managers.py**, gèrent la logique du code, ils vont demander au **Store** les données contenue dans son **état** et les analyser pour prendre des décisions.  
 Chaque manager s'occupe d'un ensemble de tâches:
